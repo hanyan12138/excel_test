@@ -13,7 +13,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.PrintWriter;
@@ -72,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/hello", "/add", "/login", "/doLogin").permitAll()
+                .antMatchers("/hello", "/add").permitAll()
                 .antMatchers("/admin/**").hasRole("admin")
                 .antMatchers("/user/**").hasRole("user")
                 .antMatchers("/visit/**").hasRole("visit")
@@ -114,14 +113,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .exceptionHandling()
-                .authenticationEntryPoint((req, resp, authException) -> {
-                            resp.setContentType("application/json;charset=utf-8");
-                            PrintWriter out = resp.getWriter();
-                            out.write("尚未登录，请先登录");
-                            out.flush();
-                            out.close();
-                        }
-                )
+//                .authenticationEntryPoint((req, resp, authException) -> {
+//                            resp.setContentType("application/json;charset=utf-8");
+//                            PrintWriter out = resp.getWriter();
+//                            out.write("尚未登录，请先登录");
+//                            out.flush();
+//                            out.close();
+//                        }
+//                )
                 //设置自定义权限不足提示语
                 .accessDeniedHandler(authenticationAccessDeniedHandler);
     }

@@ -28,6 +28,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,11 +61,16 @@ public class TradeInfoController {
         return ResultUtil.success(tradeInfoList);
     }
 
-    @Async
     @RequestMapping(value = "/export2", method = RequestMethod.GET)
     public Result<List<TradeInfo>> export2(HttpServletResponse response) throws IOException {
         simpleWrite.exportTradeInfoLarge();
-        return ResultUtil.success(null);
+        return ResultUtil.success("hanyan test");
+    }
+
+    @RequestMapping(value = "/export3", method = RequestMethod.GET)
+    public Result<List<TradeInfo>> export3(HttpServletResponse response) throws IOException, SQLException {
+        simpleWrite.exportTradeInfoMysql();
+        return ResultUtil.success("hanyan test2");
     }
 
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
